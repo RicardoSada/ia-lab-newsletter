@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IA Lab Semanal · Instituto de Inteligencia Artificial · UFV</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  if (window.tailwind) tailwind.config = {
+    theme: {
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        navy: { 900: 'var(--ufv-color-navy-900)' },
+        azul: { 600: 'var(--ufv-color-azul-600)', 300: 'var(--ufv-color-azul-300)' },
+        coral: { 500: 'var(--ufv-color-coral-500)', 700: 'var(--ufv-color-coral-700)' },
+        neutral: { 0: 'var(--ufv-color-neutral-0)', 300: 'var(--ufv-color-neutral-300)', 500: 'var(--ufv-color-neutral-500)', 1000: 'var(--ufv-color-neutral-1000)' },
+        superficie: {
+          base: 'var(--ufv-color-superficie-base)',
+          sutil: 'var(--ufv-color-superficie-sutil)',
+          marca: 'var(--ufv-color-superficie-marca)',
+          intensa: 'var(--ufv-color-superficie-intensa)',
+          destacada: 'var(--ufv-color-superficie-destacada)'
+        },
+        texto: {
+          principal: 'var(--ufv-color-texto-principal)',
+          titulo: 'var(--ufv-color-texto-titulo)',
+          secundario: 'var(--ufv-color-texto-secundario)',
+          inverso: 'var(--ufv-color-texto-inverso)'
+        },
+        acento: { DEFAULT: 'var(--ufv-color-acento)', alt: 'var(--ufv-color-acento-alt)' },
+        borde: { sutil: 'var(--ufv-color-borde-sutil)', acento: 'var(--ufv-color-borde-acento)' },
+        enlace: 'var(--ufv-color-enlace)'
+      },
+      fontFamily: {
+        display: ['Rockwell', 'serif'],
+        base: ['Arial', 'Arimo', 'Liberation Sans', 'Helvetica', 'sans-serif'],
+        mono: ['Consolas', 'Menlo', 'monospace']
+      },
+      fontSize: {
+        micro: '0.6875rem',
+        caption: '0.8125rem',
+        small: '1rem',
+        body: '1.1875rem',
+        h3: '1.6875rem',
+        h2: '2rem',
+        h1: '2.6875rem',
+        quote: '3rem',
+        'display-s': '5rem'
+      },
+      fontWeight: { normal: '400', bold: '700' },
+      borderRadius: { none: '0', s: '4px', m: '8px', pill: '999px' },
+      boxShadow: {
+        none: 'none',
+        e1: '0 1px 2px rgba(0, 26, 51, 0.08)',
+        e2: '0 4px 12px rgba(0, 26, 51, 0.12)'
+      },
+      extend: {
+        lineHeight: { tight: '1.1', heading: '1.2', base: '1.4', loose: '1.6' },
+        borderWidth: { hairline: '0.5pt', thick: '2px' }
+      }
+    }
+  };
+</script>
+<style>
+  :root {
+    --ufv-color-navy-900: #001A33;
+    --ufv-color-azul-600: #003865;
+    --ufv-color-azul-300: #649EFF;
+    --ufv-color-coral-500: #FF5D74;
+    --ufv-color-coral-700: #C03656;
+    --ufv-color-neutral-0: #FFFFFF;
+    --ufv-color-neutral-300: #CACACA;
+    --ufv-color-neutral-500: #919191;
+    --ufv-color-neutral-1000: #000000;
+    --ufv-color-superficie-base: var(--ufv-color-neutral-0);
+    --ufv-color-superficie-sutil: var(--ufv-color-neutral-300);
+    --ufv-color-superficie-marca: var(--ufv-color-azul-600);
+    --ufv-color-superficie-intensa: var(--ufv-color-navy-900);
+    --ufv-color-superficie-destacada: var(--ufv-color-azul-300);
+    --ufv-color-texto-principal: var(--ufv-color-navy-900);
+    --ufv-color-texto-titulo: var(--ufv-color-azul-600);
+    --ufv-color-texto-secundario: var(--ufv-color-neutral-500);
+    --ufv-color-texto-inverso: var(--ufv-color-neutral-0);
+    --ufv-color-acento: var(--ufv-color-coral-500);
+    --ufv-color-acento-alt: var(--ufv-color-coral-700);
+    --ufv-color-borde-sutil: var(--ufv-color-neutral-300);
+    --ufv-color-borde-acento: var(--ufv-color-coral-500);
+    --ufv-color-enlace: var(--ufv-color-navy-900);
+  }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ufv-color-superficie-base); color: var(--ufv-color-texto-principal); }
+  :focus-visible { outline: 2px solid var(--ufv-color-texto-titulo); outline-offset: 2px; }
+  .nav-tab {
+    padding: 8px 0; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--ufv-color-texto-principal); border-bottom: 2px solid transparent; background: none; cursor: pointer;
+  }
+  .nav-tab.nav-activo { border-bottom-color: var(--ufv-color-acento); }
+  .error:not(:empty) { display: block; margin-top: 4px; padding-left: 8px; border-left: 2px solid var(--ufv-color-borde-acento); }
+  [aria-invalid="true"] { border-color: var(--ufv-color-borde-acento) !important; box-shadow: inset 0 0 0 1px var(--ufv-color-borde-acento); }
+  a { color: var(--ufv-color-enlace); }
+</style>
+</head>
+<body class="font-base text-body leading-base">
+
+<div data-accion="scroll-top" class="sticky top-0 z-50 bg-superficie-intensa text-texto-inverso cursor-pointer select-none shadow-e1 hover:opacity-95 transition-opacity" title="Volver al inicio">
+  <div class="max-w-5xl mx-auto px-4 md:px-8 py-2 flex items-center justify-between gap-4">
+    <p class="text-micro font-bold uppercase tracking-[0.16em]">Universidad Francisco de Vitoria · Instituto IA</p>
+    <p class="hidden sm:block text-micro font-bold uppercase tracking-[0.12em]">Publicación interna</p>
+  </div>
+</div>
+
+<header class="bg-superficie-base">
+  <div class="max-w-5xl mx-auto px-4 md:px-8">
+    <div class="pt-8 pb-6 text-center">
+      <img src="./logo.png" alt="IA Lab - Universidad Francisco de Vitoria" data-accion="volver-inicio" class="h-16 md:h-20 w-auto mx-auto cursor-pointer select-none">
+      <h1 data-accion="volver-inicio" class="mt-4 font-display font-bold text-h1 sm:text-quote md:text-display-s leading-tight text-texto-titulo cursor-pointer select-none">IA LAB SEMANAL</h1>
+    </div>
+
+    <div class="border-t-thick border-b border-texto-principal py-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-caption text-texto-principal">
+      <span id="fecha-hoy"></span>
+      <span id="meta-semana" class="font-bold uppercase tracking-[0.08em]"></span>
+      <span id="meta-numero"></span>
+    </div>
+
+    <nav aria-label="Secciones" class="flex flex-wrap items-center justify-between gap-4 py-3 border-b border-borde-sutil">
+      <div class="flex items-center gap-6">
+        <button type="button" class="nav-tab" data-nav="edicion">Edición Actual</button>
+        <button type="button" class="nav-tab" data-nav="hemeroteca">Hemeroteca</button>
+      </div>
+      <div class="flex items-center gap-6">
+        <button type="button" class="nav-tab" data-nav="admin">Panel Admin</button>
+        <button type="button" data-accion="proponer" class="inline-flex items-center gap-2 rounded-s bg-superficie-marca text-texto-inverso px-4 py-2 text-caption font-bold uppercase tracking-[0.06em] hover:bg-superficie-intensa">
+          <svg aria-hidden="true" class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 1v10M1 6h10"/></svg>
+          Proponer Noticia
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="vista" class="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-16"></main>
+
+<footer class="bg-superficie-intensa text-texto-inverso">
+  <div class="max-w-5xl mx-auto px-4 md:px-8 py-12 grid gap-6 md:grid-cols-2">
+    <div>
+      <p class="font-display font-bold text-h3 leading-heading">IA LAB SEMANAL</p>
+      <p class="mt-2 text-caption">Instituto de Inteligencia Artificial de la Universidad Francisco de Vitoria</p>
+    </div>
+    <div class="md:text-right text-caption">
+      <p>Publicación interna del IA Lab</p>
+      <p class="mt-1">Acceso restringido a la red del Instituto</p>
+    </div>
+  </div>
+</footer>
+
+<div id="modal" class="hidden fixed inset-0 z-50" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+  <div data-accion="cerrar-modal" class="absolute inset-0 bg-superficie-intensa opacity-60"></div>
+  <div class="relative mx-4 md:mx-auto mt-8 md:mt-16 max-w-xl bg-superficie-base rounded-m shadow-e2 p-6 md:p-8 max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-8rem)] overflow-y-auto">
+    <div class="flex items-start justify-between gap-4">
+      <h2 id="modal-titulo" class="text-h3 font-bold leading-heading text-texto-titulo">Proponer una noticia</h2>
+      <button type="button" data-accion="cerrar-modal" aria-label="Cerrar" class="p-2 -m-2 text-texto-principal">
+        <svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>
+      </button>
+    </div>
+    <p class="mt-3 text-small leading-base text-texto-principal">Cualquier miembro del IA Lab puede sugerir una pieza para la próxima edición. El equipo senior la valora antes del cierre del domingo.</p>
+
+    <form id="form-propuesta" novalidate class="mt-6 space-y-6">
+      <div>
+        <label for="p-url" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">URL original</label>
+        <input id="p-url" name="url" type="url" inputmode="url" placeholder="https://" class="w-full border border-texto-principal rounded-s px-3 py-2 text-small bg-superficie-base text-texto-principal">
+        <span id="err-p-url" class="error text-caption font-bold text-texto-principal" aria-live="polite"></span>
+      </div>
+      <div>
+        <label for="p-titular" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Titular sugerido</label>
+        <input id="p-titular" name="titular" type="text" maxlength="140" class="w-full border border-texto-principal rounded-s px-3 py-2 text-small bg-superficie-base text-texto-principal">
+        <span id="err-p-titular" class="error text-caption font-bold text-texto-principal" aria-live="polite"></span>
+      </div>
+      <div>
+        <label for="p-categoria" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Categoría</label>
+        <select id="p-categoria" name="categoria" class="w-full border border-texto-principal rounded-s px-3 py-2 text-small bg-superficie-base text-texto-principal"></select>
+        <span id="err-p-categoria" class="error text-caption font-bold text-texto-principal" aria-live="polite"></span>
+      </div>
+      <div>
+        <label for="p-justificacion" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Por qué interesa al Lab</label>
+        <textarea id="p-justificacion" name="justificacion" rows="4" maxlength="600" class="w-full border border-texto-principal rounded-s px-3 py-2 text-small leading-base bg-superficie-base text-texto-principal"></textarea>
+        <span id="err-p-justificacion" class="error text-caption font-bold text-texto-principal" aria-live="polite"></span>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" data-accion="cerrar-modal" class="rounded-s border border-texto-principal bg-superficie-base text-texto-principal px-4 py-2 text-caption font-bold uppercase tracking-[0.06em] hover:bg-superficie-sutil">Cancelar</button>
+        <button type="submit" class="rounded-s bg-superficie-marca text-texto-inverso px-4 py-2 text-caption font-bold uppercase tracking-[0.06em] hover:bg-superficie-intensa">Enviar propuesta</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="aviso" role="status" aria-live="polite" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-superficie-intensa text-texto-inverso px-5 py-3 rounded-s shadow-e2 text-caption font-bold"></div>
+
+<script>
+const CATEGORIAS = {
+  llm: 'Modelos de lenguaje',
+  agentes: 'Agentes',
+  inferencia: 'Inferencia local',
+  regulacion: 'Regulación',
+  investigacion: 'Investigación',
+  herramientas: 'Herramientas',
+  educacion: 'Educación'
+};
+
+// Paleta de colores institucionales con 100% de contraste y legibilidad garantizada
+const ESTILOS_CATEGORIA = {
+  llm: 'bg-[#003865] text-[#FFFFFF]',
+  agentes: 'bg-[#001A33] text-[#FFFFFF]',
+  inferencia: 'bg-[#1D4ED8] text-[#FFFFFF]',
+  regulacion: 'bg-[#C03656] text-[#FFFFFF]',
+  investigacion: 'bg-[#FF5D74] text-[#FFFFFF]',
+  herramientas: 'bg-[#4B5563] text-[#FFFFFF]',
+  educacion: 'bg-[#065F46] text-[#FFFFFF]'
+};
+
+const IMG = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=80`;
+
+const mockData = {
+  edicionActual: {
+    id: 's39', semana: 39, rango: '21–27 Sep 2026', numero: 14, volumen: 1,
+    noticias: [
+      {
+        id: 'n14-1', categoria: 'llm',
+        titular: 'Los grandes modelos de lenguaje aprenden a revisar su propio razonamiento antes de responder',
+        resumen: [
+          'La última generación de modelos de lenguaje incorpora una fase de verificación interna. Antes de entregar la respuesta, el sistema genera varios caminos de razonamiento, los contrasta entre sí y descarta los que contienen contradicciones. Los laboratorios que han publicado resultados describen reducciones notables de errores en problemas matemáticos y de programación de varios pasos, justo el tipo de tarea en la que los modelos anteriores fallaban con más frecuencia.',
+          'El avance tiene un coste. Verificar consume más cómputo por consulta y alarga los tiempos de respuesta, lo que obliga a decidir en cada caso si compensa esperar unos segundos más a cambio de una respuesta más fiable. Varios investigadores independientes piden además cautela, porque buena parte de las cifras procede de pruebas diseñadas por los propios desarrolladores y todavía falta replicarlas en condiciones reales.'
+        ],
+        impacto: 'Los asistentes que el Lab construye para consultas académicas fallan sobre todo en preguntas de varios pasos, como normativas con excepciones o cálculos de créditos. Un modelo que verifica antes de responder podría reducir esas respuestas erróneas, pero antes hay que medir si el aumento de latencia es aceptable para un servicio de uso diario.',
+        fuente: 'MIT Technology Review', url: 'https://www.technologyreview.com', lectura: 6, votos: 18,
+        imagen: IMG('photo-1677442136019-21780ecad995'), alt: 'Representación abstracta de una red neuronal'
+      },
+      {
+        id: 'n14-2', categoria: 'agentes',
+        titular: 'Los agentes de IA llegan a la oficina, pero todavía tropiezan con las tareas largas',
+        sintesis: 'Las empresas empiezan a desplegar agentes capaces de encadenar acciones en distintas aplicaciones, desde rellenar formularios hasta cruzar datos entre sistemas. Los primeros informes coinciden en un patrón: rinden bien en tareas cortas y bien delimitadas, y su fiabilidad cae a medida que aumenta el número de pasos y de herramientas implicadas.',
+        impacto: 'Refuerza el enfoque del Lab de empezar por automatizaciones acotadas y validadas por una persona, en lugar de agentes autónomos de largo recorrido conectados a sistemas corporativos.',
+        fuente: 'Financial Times', url: 'https://www.ft.com', lectura: 4, votos: 11,
+        imagen: IMG('photo-1485827404703-89b55fcc595e'), alt: 'Robot humanoide blanco'
+      },
+      {
+        id: 'n14-3', categoria: 'inferencia',
+        titular: 'Ejecutar un modelo competente en un portátil ha dejado de ser una rareza',
+        sintesis: 'Las técnicas de cuantización y los nuevos modelos compactos permiten ejecutar en local sistemas que hace dos años exigían un centro de datos. En tareas como resumir, clasificar o extraer información de documentos, la diferencia de calidad frente a los grandes modelos en la nube se ha reducido de forma considerable.',
+        impacto: 'Abre la puerta a procesar documentos internos de la universidad en el propio servidor del Lab, sin enviar datos a proveedores externos. Es una vía a evaluar en los casos con información personal de estudiantes.',
+        fuente: 'Ars Technica', url: 'https://arstechnica.com', lectura: 5, votos: 9,
+        imagen: IMG('photo-1558494949-ef010cbdcc31'), alt: 'Pasillo de servidores en un centro de datos'
+      },
+      {
+        id: 'n14-4', categoria: 'regulacion',
+        titular: 'La Ley de IA europea entra en su fase exigente y la universidad también está en el mapa',
+        sintesis: 'El reglamento europeo señala la educación como ámbito sensible. Los sistemas que deciden admisiones o evalúan resultados de aprendizaje entran en la categoría de alto riesgo, con obligaciones de documentación, supervisión humana y gestión de riesgos. Al mismo tiempo, el texto contempla una exención para los sistemas desarrollados únicamente con fines de investigación científica.',
+        impacto: 'Conviene distinguir desde ya qué desarrollos del Lab son investigación y cuáles acabarán en servicios reales para estudiantes. Estos últimos necesitarán documentación técnica y supervisión humana desde el diseño.',
+        fuente: 'Reuters', url: 'https://www.reuters.com', lectura: 7, votos: 14,
+        imagen: IMG('photo-1589829545856-d10d557cf95f'), alt: 'Balanza de la justicia sobre una mesa'
+      }
+    ]
+  },
+
+  hemeroteca: [
+    {
+      id: 's38', semana: 38, rango: '14–20 Sep 2026', numero: 13, volumen: 1,
+      noticias: [
+        { id: 'n13-1', categoria: 'llm', titular: 'Los modelos abiertos recortan distancias con los comerciales en tareas de programación', sintesis: 'Los últimos modelos de pesos abiertos se acercan a los comerciales en las pruebas de generación de código más utilizadas, aunque la distancia sigue siendo visible en proyectos grandes con muchos ficheros.', impacto: 'Permite plantear herramientas internas de apoyo al desarrollo sin depender de licencias externas.', fuente: 'Ars Technica', url: 'https://arstechnica.com', lectura: 5, votos: 16, imagen: IMG('photo-1518770660439-4636190af475'), alt: 'Placa de circuito impreso' },
+        { id: 'n13-2', categoria: 'educacion', titular: 'Varias universidades europeas publican sus guías de uso de IA generativa en la docencia', sintesis: 'Las guías coinciden en permitir el uso con transparencia y en pedir al profesorado que rediseñe las evaluaciones en lugar de intentar detectar el texto generado.', impacto: 'Sirve de referencia para la propuesta de guía interna que el Instituto prepara para la UFV.', fuente: 'Times Higher Education', url: 'https://www.timeshighereducation.com', lectura: 6, votos: 12 },
+        { id: 'n13-3', categoria: 'herramientas', titular: 'Los editores de código con asistente integrado se convierten en estándar en los equipos de desarrollo', sintesis: 'Las encuestas a desarrolladores muestran que el asistente integrado en el editor ya forma parte del flujo de trabajo habitual en la mayoría de equipos.', impacto: 'Conviene acordar criterios comunes de uso entre los becarios del Lab para que el código sea revisable.', fuente: 'The Verge', url: 'https://www.theverge.com', lectura: 3, votos: 8 }
+      ]
+    },
+    {
+      id: 's37', semana: 37, rango: '7–13 Sep 2026', numero: 12, volumen: 1,
+      noticias: [
+        { id: 'n12-1', categoria: 'investigacion', titular: 'Un estudio mide cuánta energía consume realmente cada consulta a un modelo de lenguaje', sintesis: 'Los autores miden el consumo en centros de datos reales en lugar de estimarlo, y encuentran grandes diferencias según el tamaño del modelo y la longitud de la respuesta.', impacto: 'Da argumentos para elegir modelos pequeños en los servicios del Lab donde la calidad lo permita.', fuente: 'Nature', url: 'https://www.nature.com', lectura: 8, votos: 13, imagen: IMG('photo-1451187580459-43490279c0fa'), alt: 'La Tierra vista desde el espacio con luces de red' },
+        { id: 'n12-2', categoria: 'agentes', titular: 'Los primeros agentes de atención al cliente reducen tiempos, pero aumentan las derivaciones a personas', sintesis: 'Las empresas que los han implantado resuelven antes las consultas sencillas, pero ven crecer los casos que acaban en un agente humano por respuestas incompletas.', impacto: 'Útil para dimensionar el asistente de secretaría: siempre debe existir una salida clara hacia una persona.', fuente: 'Financial Times', url: 'https://www.ft.com', lectura: 4, votos: 7 },
+        { id: 'n12-3', categoria: 'regulacion', titular: 'Quién vigilará la inteligencia artificial en España a partir de ahora', sintesis: 'El reparto de competencias entre la agencia nacional de supervisión y los reguladores sectoriales empieza a concretarse a medida que avanza la aplicación del reglamento europeo.', impacto: 'Identifica a qué organismo habría que dirigirse si un servicio del Lab entra en la categoría de alto riesgo.', fuente: 'El País', url: 'https://elpais.com', lectura: 5, votos: 10 }
+      ]
+    },
+    {
+      id: 's36', semana: 36, rango: '31 Ago – 6 Sep 2026', numero: 11, volumen: 1,
+      noticias: [
+        { id: 'n11-1', categoria: 'educacion', titular: 'Los detectores de texto generado por IA siguen sin ser fiables para evaluar trabajos académicos', sintesis: 'Nuevas evaluaciones confirman tasas de falsos positivos demasiado altas para usarlos como prueba, sobre todo con estudiantes que escriben en una segunda lengua.', impacto: 'Desaconseja incorporar detectores automáticos en cualquier herramienta de apoyo a la evaluación que desarrolle el Lab.', fuente: 'MIT Technology Review', url: 'https://www.technologyreview.com', lectura: 6, votos: 15, imagen: IMG('photo-1620712943543-bcc4688e7485'), alt: 'Rostro de robot con iluminación azul' },
+        { id: 'n11-2', categoria: 'inferencia', titular: 'Los chips para ejecutar IA en el propio dispositivo llegan a los portátiles de gama media', sintesis: 'Los fabricantes extienden a equipos más asequibles los procesadores dedicados a ejecutar modelos sin conexión a la nube.', impacto: 'A medio plazo, algunos asistentes del Lab podrían funcionar directamente en los equipos de los usuarios.', fuente: 'The Verge', url: 'https://www.theverge.com', lectura: 3, votos: 9 }
+      ]
+    }
+  ],
+
+  comentarios: []
+};
+
+const CLAVES = {
+  votos: 'ialab.votos.v1',
+  propuestas: 'ialab.propuestas.v1',
+  nombre: 'ialab.nombre.v1'
+};
+
+const LS = {
+  leer(clave, porDefecto) {
+    try { const v = localStorage.getItem(clave); return v ? JSON.parse(v) : porDefecto; }
+    catch (e) { return porDefecto; }
+  },
+  guardar(clave, valor) {
+    try { localStorage.setItem(clave, JSON.stringify(valor)); } catch (e) {}
+  }
+};
+
+let votos = LS.leer(CLAVES.votos, []);
+let comentarios = [];
+let propuestas = LS.leer(CLAVES.propuestas, []);
+let nombre = LS.leer(CLAVES.nombre, '');
+let registro = [];
+
+const estado = {
+  vista: 'edicion',
+  edicionId: mockData.edicionActual.id,
+  paneles: new Set(),
+  textos: {},
+  nombreTemp: null,
+  feedback: {},
+  generando: new Set(),
+  filtroEdicion: 'todas',
+  filtroCategoria: 'todas',
+  busqueda: '',
+  focoPrevio: null
+};
+
+const ICONO = {
+  voto: '<svg aria-hidden="true" class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10.5V1.5M2 5.5l4-4 4 4"/></svg>',
+  comentario: '<svg aria-hidden="true" class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M1.5 2.5h11v7h-6l-3 2.5v-2.5h-2z"/></svg>',
+  externo: '<svg aria-hidden="true" class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2v8h8V7M7 1.5h3.5V5M10.5 1.5L5.5 6.5"/></svg>',
+  buscar: '<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>',
+  spinner: '<svg aria-hidden="true" class="w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.3"/><path d="M21 12a9 9 0 0 0-9-9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
+};
+
+const BTN_PRIMARIO = 'inline-flex items-center gap-2 rounded-s bg-superficie-marca text-texto-inverso px-4 py-2 text-caption font-bold uppercase tracking-[0.06em] hover:bg-superficie-intensa disabled:opacity-50 disabled:cursor-not-allowed';
+const BTN_SECUNDARIO = 'inline-flex items-center gap-2 rounded-s border border-texto-principal bg-superficie-base text-texto-principal px-4 py-2 text-caption font-bold uppercase tracking-[0.06em] hover:bg-superficie-sutil disabled:opacity-50 disabled:cursor-not-allowed';
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function sinPunto(t) { return String(t).replace(/[.\s]+$/, ''); }
+function normalizar(s) { return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+function hora() { const d = new Date(); return d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }); }
+function fechaLarga(d) {
+  const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  return `${dias[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
+function todasEdiciones() { return [mockData.edicionActual, ...mockData.hemeroteca]; }
+function edicionPorId(id) { return todasEdiciones().find(e => e.id === id); }
+function buscarNoticia(id) {
+  for (const e of todasEdiciones()) {
+    const n = e.noticias.find(x => x.id === id);
+    if (n) return { noticia: n, edicion: e };
+  }
+  return null;
+}
+function totalVotos(n) { return n.votos; }
+function comentariosVisibles(id) {
+  return comentarios.filter(c => c.noticiaId === id && (c.estado === 'aprobado' || (c.estado === 'ambiguo' && c.propio)));
+}
+function numAprobados(id) { return comentarios.filter(c => c.noticiaId === id && c.estado === 'aprobado').length; }
+
+function rotulo(texto) {
+  return `<div class="flex items-center gap-3 mb-8">
+    <span aria-hidden="true" class="block w-8 h-[2px] bg-acento"></span>
+    <h2 class="text-caption font-bold uppercase tracking-[0.14em] text-texto-principal">${esc(texto)}</h2>
+  </div>`;
+}
+
+function badgeCategoria(cat) {
+  const estilo = ESTILOS_CATEGORIA[cat] || 'bg-superficie-sutil text-texto-principal';
+  return `<span class="inline-block px-2.5 py-1 rounded-s text-micro font-bold uppercase tracking-[0.1em] ${estilo}">${esc(CATEGORIAS[cat] || cat)}</span>`;
+}
+
+function antetitulo(cat) {
+  return `<p class="flex items-center gap-3 mb-4">
+    ${badgeCategoria(cat)}
+  </p>`;
+}
+
+function bloqueImagen(n, proporcion) {
+  return `<div class="relative ${proporcion} overflow-hidden bg-superficie-intensa">
+    <span aria-hidden="true" class="absolute inset-0 flex items-center justify-center font-display font-bold text-h3 text-texto-inverso">IA LAB SEMANAL</span>
+    <img src="${esc(n.imagen)}" alt="${esc(n.alt || '')}" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()">
+  </div>`;
+}
+
+function botonVoto(n, soloLectura) {
+  const v = votos.includes(n.id);
+  const estilo = v
+    ? 'bg-superficie-marca border-superficie-marca text-texto-inverso'
+    : 'bg-superficie-base border-texto-principal text-texto-principal hover:bg-superficie-sutil';
+  return `<button type="button" data-accion="votar" data-id="${n.id}" aria-pressed="${v}" ${soloLectura ? 'disabled' : ''}
+    class="inline-flex items-center gap-2 rounded-s border px-3 py-2 text-caption font-bold uppercase tracking-[0.06em] ${estilo} disabled:opacity-50 disabled:cursor-not-allowed">
+    ${ICONO.voto}<span>${v ? 'Votado' : 'Votar'}</span><span aria-label="${totalVotos(n)} votos">${totalVotos(n)}</span>
+  </button>`;
+}
+
+function botonComentarios(n) {
+  const abierto = estado.paneles.has(n.id);
+  return `<button type="button" data-accion="comentarios" data-id="${n.id}" aria-expanded="${abierto}" aria-controls="panel-${n.id}"
+    class="inline-flex items-center gap-2 rounded-s border border-texto-principal bg-superficie-base text-texto-principal px-3 py-2 text-caption font-bold uppercase tracking-[0.06em] hover:bg-superficie-sutil">
+    ${ICONO.comentario}<span>${abierto ? 'Ocultar comentarios' : 'Comentarios'}</span><span>${numAprobados(n.id)}</span>
+  </button>`;
+}
+
+function barraMeta(n, soloLectura) {
+  return `<div class="mt-8 py-4 border-y border-borde-sutil flex flex-wrap items-center gap-x-6 gap-y-3 text-caption text-texto-principal">
+    <span>${n.lectura} min de lectura</span>
+    <a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 underline underline-offset-2">Fuente: ${esc(n.fuente)} ${ICONO.externo}</a>
+    <div class="flex flex-wrap items-center gap-2 sm:ml-auto">
+      ${botonVoto(n, soloLectura)}
+      ${soloLectura ? '<span class="px-2">Comentarios cerrados</span>' : botonComentarios(n)}
+    </div>
+  </div>`;
+}
+
+function respuestaOficial(r) {
+  return `<div class="mt-4 ml-2 md:ml-4 pl-4 border-l-thick border-superficie-marca">
+    <p class="text-micro font-bold uppercase tracking-[0.1em] text-texto-titulo">Respuesta del IA Lab</p>
+    <p class="text-micro text-texto-principal">${esc(r.tipo)}</p>
+    <p class="mt-2 text-small leading-base text-texto-principal">${esc(r.texto)}</p>
+  </div>`;
+}
+
+function itemComentario(c) {
+  return `<li class="py-5">
+    <p class="text-caption text-texto-principal"><span class="font-bold">${esc(c.autor)}</span>, ${esc(c.fecha)}</p>
+    <p class="mt-1 text-small leading-base text-texto-principal">${esc(c.texto)}</p>
+    ${c.estado === 'ambiguo' ? '<p class="mt-2 inline-block text-micro font-bold uppercase tracking-[0.08em] bg-superficie-sutil text-texto-principal px-2 py-1 rounded-s">Pendiente de revisión, solo visible para ti</p>' : ''}
+    ${c.respuesta ? respuestaOficial(c.respuesta) : ''}
+  </li>`;
+}
+
+function mensajeFeedback(id) {
+  const f = estado.feedback[id];
+  if (!f) return '';
+  const borde = f.tipo === 'rechazado' ? 'border-borde-acento' : f.tipo === 'revision' ? 'border-superficie-destacada' : 'border-superficie-marca';
+  return `<p role="status" class="mt-4 pl-3 border-l-thick ${borde} text-caption font-bold text-texto-principal">${esc(f.texto)}</p>`;
+}
+
+function panelComentarios(n, soloLectura) {
+  if (soloLectura || !estado.paneles.has(n.id)) return '';
+  const lista = comentariosVisibles(n.id);
+  const valorNombre = estado.nombreTemp ?? nombre;
+  const valorTexto = estado.textos[n.id] || '';
+  return `<section id="panel-${n.id}" aria-label="Comentarios" class="mt-8">
+    <h3 class="text-caption font-bold uppercase tracking-[0.1em] text-texto-principal mb-2">Conversación</h3>
+    ${lista.length
+      ? `<ul class="divide-y divide-borde-sutil border-t border-borde-sutil">${lista.map(itemComentario).join('')}</ul>`
+      : '<p class="py-5 border-t border-borde-sutil text-small text-texto-principal">Todavía no hay comentarios. Abre tú la conversación.</p>'}
+    <form data-form-comentario="${n.id}" novalidate class="mt-6 pt-6 border-t border-texto-principal space-y-4">
+      <div>
+        <label for="nom-${n.id}" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Nombre</label>
+        <input id="nom-${n.id}" name="nombre" type="text" autocomplete="name" maxlength="60" value="${esc(valorNombre)}" data-validar="${n.id}"
+          class="w-full md:w-1/2 border border-texto-principal rounded-s px-3 py-2 text-small bg-superficie-base text-texto-principal">
+      </div>
+      <div>
+        <label for="txt-${n.id}" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Comentario</label>
+        <textarea id="txt-${n.id}" name="texto" rows="3" maxlength="500" data-validar="${n.id}"
+          class="w-full border border-texto-principal rounded-s px-3 py-2 text-small leading-base bg-superficie-base text-texto-principal">${esc(valorTexto)}</textarea>
+        <div class="flex justify-between gap-4 mt-1 text-micro text-texto-principal">
+          <span id="err-${n.id}" class="error font-bold" aria-live="polite"></span>
+          <span id="cont-${n.id}" class="shrink-0">0 / 500</span>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <p class="text-micro text-texto-principal max-w-sm">Los comentarios pasan por moderación automática. Los dudosos los revisa el equipo antes de mostrarse.</p>
+        <button type="submit" id="btn-${n.id}" disabled class="${BTN_PRIMARIO}">Publicar comentario</button>
+      </div>
+      ${mensajeFeedback(n.id)}
+    </form>
+  </section>`;
+}
+
+function renderPortada(n, soloLectura) {
+  const parrafos = n.resumen || [n.sintesis];
+  return `<article>
+    <figure class="mb-8">
+      ${bloqueImagen(n, 'aspect-[16/9] md:aspect-[21/9]')}
+      <figcaption class="mt-2 text-micro text-texto-principal">Imagen ilustrativa. Fotografía de Unsplash.</figcaption>
+    </figure>
+    ${antetitulo(n.categoria)}
+    <h3 class="font-display font-bold text-h2 md:text-h1 leading-heading text-texto-titulo mb-6">${esc(sinPunto(n.titular))}</h3>
+    <div class="space-y-4 text-body leading-loose text-texto-principal max-w-[68ch]">
+      ${parrafos.map(p => `<p>${esc(p)}</p>`).join('')}
+    </div>
+    <aside class="mt-10 border border-superficie-intensa p-6 md:p-8">
+      <p class="flex items-center gap-3 text-caption font-bold uppercase tracking-[0.12em] text-texto-principal">
+        <span aria-hidden="true" class="block w-6 h-[2px] bg-acento"></span>Impacto en el Lab
+      </p>
+      <p class="mt-4 text-small leading-loose text-texto-principal">${esc(n.impacto)}</p>
+    </aside>
+    ${barraMeta(n, soloLectura)}
+    ${panelComentarios(n, soloLectura)}
+  </article>`;
+}
+
+function renderSecundaria(n, soloLectura, primera) {
+  const conImagen = !!n.imagen;
+  return `<article class="py-12 ${primera ? '' : 'border-t border-borde-sutil'}">
+    <div class="${conImagen ? 'md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-8' : ''}">
+      ${conImagen ? `<figure class="mb-6 md:mb-0">${bloqueImagen(n, 'aspect-[4/3]')}</figure>` : ''}
+      <div>
+        ${antetitulo(n.categoria)}
+        <h3 class="text-h3 font-bold leading-heading text-texto-titulo mb-4">${esc(sinPunto(n.titular))}</h3>
+        <p class="text-small leading-loose text-texto-principal">${esc(n.sintesis)}</p>
+        <div class="mt-6 pl-4 border-l-thick border-superficie-marca">
+          <p class="text-micro font-bold uppercase tracking-[0.1em] text-texto-titulo">Impacto en el Lab</p>
+          <p class="mt-1 text-caption leading-base text-texto-principal">${esc(n.impacto)}</p>
+        </div>
+      </div>
+    </div>
+    ${barraMeta(n, soloLectura)}
+    ${panelComentarios(n, soloLectura)}
+  </article>`;
+}
+
+function bannerAnterior(ed) {
+  return `<div class="mb-12 border border-texto-principal px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+    <p class="text-caption text-texto-principal"><span class="font-bold uppercase tracking-[0.08em]">Edición anterior.</span> Semana ${ed.semana}, ${esc(ed.rango)}, número ${ed.numero}. Solo consulta: no se puede votar ni comentar.</p>
+    <button type="button" data-accion="volver-actual" class="text-caption font-bold underline underline-offset-2 text-enlace">Volver a la edición actual</button>
+  </div>`;
+}
+
+function colofon(ed, esActual) {
+  return `<footer class="mt-16 pt-8 border-t-thick border-texto-principal text-center">
+    <p class="text-micro font-bold uppercase tracking-[0.16em] text-texto-principal">Fin de la edición número ${ed.numero}</p>
+    <p class="mt-3 text-caption leading-base text-texto-principal max-w-xl mx-auto">Selección curada por el equipo del IA Lab con apoyo de herramientas de IA. Cada pieza enlaza a su fuente original. La próxima edición se publica el lunes.</p>
+    ${esActual ? `<button type="button" data-accion="proponer" class="${BTN_SECUNDARIO} mt-6">Proponer una noticia para la próxima edición</button>` : ''}
+  </footer>`;
+}
+
+function renderEdicion() {
+  const ed = edicionPorId(estado.edicionId);
+  const esActual = ed.id === mockData.edicionActual.id;
+  const [portada, ...resto] = ed.noticias;
+  return `
+    ${esActual ? '' : bannerAnterior(ed)}
+    <section>
+      ${rotulo('En portada')}
+      ${renderPortada(portada, !esActual)}
+    </section>
+    ${resto.length ? `<section class="mt-16">
+      ${rotulo('Más en esta edición')}
+      <div>${resto.map((n, i) => renderSecundaria(n, !esActual, i === 0)).join('')}</div>
+    </section>` : ''}
+    ${colofon(ed, esActual)}
+  `;
+}
+
+function renderHemeroteca() {
+  return `
+    <header class="mb-12">
+      <h2 class="text-h2 font-bold leading-heading text-texto-titulo">Hemeroteca</h2>
+      <p class="mt-3 text-small leading-base text-texto-principal max-w-[60ch]">Todas las ediciones anteriores del IA Lab Semanal. Se pueden consultar completas, pero ya no admiten votos ni comentarios.</p>
+    </header>
+    <div class="grid gap-6 md:grid-cols-3 mb-8">
+      <div>
+        <label for="sel-edicion" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Edición</label>
+        <select id="sel-edicion" class="w-full border border-texto-principal rounded-s px-3 py-2 text-small bg-superficie-base text-texto-principal">
+          <option value="todas">Todas las ediciones</option>
+          ${mockData.hemeroteca.map(e => `<option value="${e.id}" ${estado.filtroEdicion === e.id ? 'selected' : ''}>Semana ${e.semana} ·${esc(e.rango)}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label for="sel-categoria" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Categoría / Tópico</label>
+        <select id="sel-categoria" class="w-full border border-texto-principal rounded-s px-3 py-2 text-small bg-superficie-base text-texto-principal">
+          <option value="todas">Todas las categorías</option>
+          ${Object.entries(CATEGORIAS).map(([k, v]) => `<option value="${k}" ${estado.filtroCategoria === k ? 'selected' : ''}>${v}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label for="buscar" class="block text-caption font-bold uppercase tracking-[0.08em] mb-2">Buscar por palabra</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-texto-principal">${ICONO.buscar}</span>
+          <input id="buscar" type="search" value="${esc(estado.busqueda)}" placeholder="Ej: agentes o regulación"
+            class="w-full border border-texto-principal rounded-s pl-10 pr-3 py-2 text-small bg-superficie-base text-texto-principal">
+        </div>
+      </div>
+    </div>
+    <p id="hem-resultados" aria-live="polite" class="text-caption font-bold text-texto-principal mb-4"></p>
+    <ol id="lista-hemeroteca" class="border-t-thick border-texto-principal"></ol>
+  `;
+}
+
+function filaHemeroteca(e, n) {
+  return `<li class="py-6 border-b border-borde-sutil grid gap-2 md:grid-cols-[180px_minmax(0,1fr)] md:gap-8">
+    <div class="text-micro text-texto-principal">
+      <p class="font-bold uppercase tracking-[0.1em]">Semana ${e.semana}</p>
+      <p>${esc(e.rango)}, número ${e.numero}</p>
+    </div>
+    <div>
+      <div class="mb-2">${badgeCategoria(n.categoria)}</div>
+      <h3 class="text-small md:text-body font-bold leading-heading text-texto-titulo">${esc(sinPunto(n.titular))}</h3>
+      <div class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-caption">
+        <button type="button" data-accion="ver-edicion" data-id="${e.id}" class="font-bold underline underline-offset-2 text-enlace">Leer la edición completa</button>
+        <a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 underline underline-offset-2">Fuente: ${esc(n.fuente)} ${ICONO.externo}</a>
+      </div>
+    </div>
+  </li>`;
+}
+
+function pintarListaHemeroteca() {
+  const lista = document.getElementById('lista-hemeroteca');
+  const resultados = document.getElementById('hem-resultados');
+  if (!lista) return;
+  const q = normalizar(estado.busqueda.trim());
+  const filas = [];
+  mockData.hemeroteca
+    .filter(e => estado.filtroEdicion === 'todas' || e.id === estado.filtroEdicion)
+    .forEach(e => e.noticias.forEach(n => {
+      const pasaCategoria = estado.filtroCategoria === 'todas' || n.categoria === estado.filtroCategoria;
+      const pasaBusqueda = !q || normalizar(n.titular).includes(q) || normalizar(CATEGORIAS[n.categoria]).includes(q);
+      if (pasaCategoria && pasaBusqueda) filas.push(filaHemeroteca(e, n));
+    }));
+  lista.innerHTML = filas.length
+    ? filas.join('')
+    : `<li class="py-12 text-center text-small text-texto-principal">Ninguna noticia coincide con los filtros seleccionados.</li>`;
+  resultados.textContent = `${filas.length} ${filas.length === 1 ? 'noticia encontrada' : 'noticias encontradas'}`;
+}
+
+function tarjetaCola(c) {
+  const info = buscarNoticia(c.noticiaId);
+  const titular = info ? sinPunto(info.noticia.titular) : 'Noticia no encontrada';
+  const generando = estado.generando.has(c.id);
+  return `<article class="border border-borde-sutil rounded-m p-6 mb-4 shadow-e1 bg-superficie-base">
+    <p class="text-micro font-bold uppercase tracking-[0.08em] text-texto-principal">En: ${esc(titular)}</p>
+    <p class="mt-4 text-caption text-texto-principal"><span class="font-bold">${esc(c.autor)}</span>, ${esc(c.fecha)}</p>
+    <blockquote class="mt-2 pl-3 border-l-thick border-borde-sutil text-small leading-base text-texto-principal">${esc(c.texto)}</blockquote>
+    <p class="mt-4 text-caption text-texto-principal"><span class="font-bold uppercase tracking-[0.08em] text-micro">Motivo de revisión:</span> ${esc(c.motivo)}</p>
+    <div class="mt-5 flex flex-wrap gap-2">
+      <button type="button" data-accion="aprobar" data-id="${c.id}" class="${BTN_PRIMARIO}">Aprobar</button>
+      <button type="button" data-accion="rechazar" data-id="${c.id}" class="${BTN_SECUNDARIO}">Rechazar</button>
+      ${c.borrador ? '' : `<button type="button" data-accion="generar" data-id="${c.id}" ${generando ? 'disabled aria-busy="true"' : ''} class="${BTN_SECUNDARIO}">
+        ${generando ? `${ICONO.spinner}<span>Generando borrador</span>` : 'Generar borrador IA (Opcional)'}
+      </button>`}
+    </div>
+    <div class="mt-6 pt-6 border-t border-borde-sutil">
+      <label for="bor-${c.id}" class="block text-micro font-bold uppercase tracking-[0.1em] text-texto-titulo">Respuesta oficial del equipo</label>
+      <textarea id="bor-${c.id}" data-borrador="${c.id}" rows="4" placeholder="Escribe aquí tu respuesta manual o edita el borrador..." class="mt-2 w-full border border-texto-principal rounded-s px-3 py-2 text-small leading-base bg-superficie-base text-texto-principal">${esc(c.borradorEditado ?? c.borrador ?? '')}</textarea>
+      <p class="mt-1 text-micro text-texto-principal">Si escribes aquí, se publicará firmado como «Escrito totalmente por humanos».</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button type="button" data-accion="aprobar-con-respuesta" data-id="${c.id}" class="${BTN_PRIMARIO}">Aprobar y publicar respuesta</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderAdmin() {
+  const cola = comentarios.filter(c => c.estado === 'ambiguo');
+  const aprobados = comentarios.filter(c => c.estado === 'aprobado');
+  return `
+    <header class="mb-12">
+      <p class="text-micro font-bold uppercase tracking-[0.14em] text-texto-principal">Uso interno del equipo senior</p>
+      <h2 class="mt-2 text-h2 font-bold leading-heading text-texto-titulo">Panel de moderación</h2>
+      <p class="mt-3 text-small leading-base text-texto-principal max-w-[60ch]">Gestiona los comentarios pendientes, responde libremente como humano o elimina cualquier comentario aprobado si te arrepientes.</p>
+    </header>
+
+    <section class="mb-16">
+      ${rotulo('Difusión')}
+      <div class="flex flex-wrap items-center gap-4">
+        <button type="button" data-accion="copiar-resumen" class="${BTN_PRIMARIO}">Copiar resumen de la semana para Teams / Email</button>
+        <p class="text-caption text-texto-principal">Copia en Markdown los titulares y enlaces de la edición número ${mockData.edicionActual.numero}.</p>
+      </div>
+      <details class="mt-4">
+        <summary class="cursor-pointer text-caption font-bold underline underline-offset-2 text-enlace">Ver el texto que se copia</summary>
+        <pre class="mt-3 p-4 border border-borde-sutil rounded-s font-mono text-caption leading-base whitespace-pre-wrap text-texto-principal">${esc(resumenMarkdown())}</pre>
+      </details>
+    </section>
+
+    <section class="mb-16">
+      ${rotulo(`Comentarios pendientes (${cola.length})`)}
+      ${cola.length ? cola.map(tarjetaCola).join('') : '<p class="py-8 text-small text-texto-principal">No hay comentarios pendientes de revisión.</p>'}
+    </section>
+
+    <section class="mb-16">
+      ${rotulo(`Comentarios ya aprobados y publicados (${aprobados.length})`)}
+      ${aprobados.length ? `<ul class="divide-y divide-borde-sutil border-t border-borde-sutil">${aprobados.map(c => {
+        const info = buscarNoticia(c.noticiaId);
+        const tit = info ? sinPunto(info.noticia.titular) : '';
+        return `<li class="py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <p class="text-micro font-bold uppercase text-texto-principal">En: ${esc(tit)}</p>
+            <p class="text-caption font-bold">${esc(c.autor)}: <span class="font-normal">${esc(c.texto)}</span></p>
+            ${c.respuesta ? `<p class="text-micro mt-1 text-superficie-marca font-bold">Respuesta (${c.respuesta.tipo}):${esc(c.respuesta.texto)}</p>` : ''}
+          </div>
+          <button type="button" data-accion="eliminar-comentario" data-id="${c.id}" class="rounded-s border border-borde-acento text-borde-acento px-3 py-1.5 text-micro font-bold uppercase tracking-[0.06em] hover:bg-superficie-sutil shrink-0">Eliminar comentario</button>
+        </li>`;
+      }).join('')}</ul>` : '<p class="py-8 text-small text-texto-principal">No hay comentarios aprobados en este momento.</p>'}
+    </section>
+
+    <section class="mb-16">
+      ${rotulo(`Propuestas de noticias (${propuestas.length})`)}
+      ${propuestas.length ? `<ul class="border-t border-borde-sutil">${propuestas.map(p => `
+        <li class="py-5 border-b border-borde-sutil">
+          <p class="text-micro font-bold uppercase tracking-[0.1em] text-texto-principal">${esc(CATEGORIAS[p.categoria] || p.categoria)}, ${esc(p.fecha)}</p>
+          <p class="mt-1 text-small font-bold leading-heading text-texto-titulo">${esc(sinPunto(p.titular))}</p>
+          <p class="mt-2 text-caption leading-base text-texto-principal">${esc(p.justificacion)}</p>
+          <a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-caption underline underline-offset-2 break-all">${esc(p.url)} ${ICONO.externo}</a>
+        </li>`).join('')}</ul>` : '<p class="py-8 text-small text-texto-principal">Todavía no se ha propuesto ninguna noticia esta semana.</p>'}
+    </section>
+
+    <section>
+      ${rotulo('Registro de actividad')}
+      ${registro.length ? `<ul class="border-t border-borde-sutil">${registro.map(r => `
+        <li class="py-3 border-b border-borde-sutil flex flex-wrap justify-between gap-2 text-caption text-texto-principal">
+          <span>${esc(r.texto)}</span><span class="font-bold">${esc(r.estado)}, ${esc(r.hora)}</span>
+        </li>`).join('')}</ul>` : '<p class="py-8 text-small text-texto-principal">Sin actividad en esta sesión.</p>'}
+    </section>
+  `;
+}
+
+function resumenMarkdown() {
+  const ed = mockData.edicionActual;
+  const [portada, ...resto] = ed.noticias;
+  let md = `# IA Lab Semanal · Semana ${ed.semana}\n`;
+  md += `*Vol. ${ed.volumen} · Nº ${ed.numero} · ${ed.rango}*\n\n`;
+  md += `## En portada\n**[${sinPunto(portada.titular)}](${portada.url})**\n${portada.resumen[0]}\n\n`;
+  md += `> Impacto en el Lab: ${portada.impacto}\n\n`;
+  md += `## Más en esta edición\n`;
+  resto.forEach(n => { md += `- **[${sinPunto(n.titular)}](${n.url})** (${CATEGORIAS[n.categoria]})\n  ${n.sintesis}\n`; });
+  md += `\n---\nInstituto de Inteligencia Artificial, Universidad Francisco de Vitoria`;
+  return md;
+}
+
+async function copiarTexto(texto) {
+  try {
+    await navigator.clipboard.writeText(texto);
+    return true;
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = texto;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    ta.remove();
+    return ok;
+  }
+}
+
+function generarBorrador(c) {
+  if (c.borradorIA) return c.borradorIA;
+  const info = buscarNoticia(c.noticiaId);
+  const titular = info ? sinPunto(info.noticia.titular) : 'esta noticia';
+  if (c.texto.trim().endsWith('?')) {
+    return `Gracias por la pregunta, ${c.autor}. Con la información publicada hasta ahora no hay una respuesta cerrada sobre este punto de «${titular}». En el IA Lab revisaremos la documentación técnica de la fuente original y actualizaremos esta conversación en cuanto podamos confirmarlo.`;
+  }
+  return `Gracias por el comentario, ${c.autor}. Compartimos la cautela: los datos de «${titular}» proceden de la fuente original y todavía no cuentan con verificación independiente. En el IA Lab preferimos esperar a resultados replicados antes de trasladarlos a nuestros proyectos.`;
+}
+
+function clasificar(texto) {
+  const t = normalizar(texto);
+  const ofensivas = ['idiota', 'estupido', 'imbecil', 'mierda', 'gilipollas', 'subnormal', 'basura total'];
+  if (ofensivas.some(p => t.includes(p))) return { clase: 'rechazado', motivo: 'Lenguaje ofensivo' };
+  if ((texto.match(/https?:\/\//g) || []).length >= 2) return { clase: 'rechazado', motivo: 'Patrón de spam con varios enlaces' };
+  if (texto.trim().endsWith('?')) return { clase: 'ambiguo', motivo: 'Pregunta directa, candidata a respuesta del equipo' };
+  if (/(mentira|falso|no me creo|dudo|humo|exagerad)/.test(t)) return { clase: 'ambiguo', motivo: 'Tono crítico sin lenguaje ofensivo' };
+  return { clase: 'aprobado', motivo: 'Sin señales de riesgo' };
+}
+
+function validarComentario(id) {
+  const nom = document.getElementById('nom-' + id);
+  const txt = document.getElementById('txt-' + id);
+  if (!nom || !txt) return false;
+  const n = nom.value.trim();
+  const t = txt.value.trim();
+  let msg = '';
+  if (t.length > 0 && t.length < 10) msg = `Escribe al menos 10 caracteres. Faltan ${10 - t.length}.`;
+  else if (t.length >= 10 && n.length < 2) msg = 'Escribe tu nombre para publicar.';
+  document.getElementById('err-' + id).textContent = msg;
+  document.getElementById('cont-' + id).textContent = `${txt.value.length} / 500`;
+  const ok = n.length >= 2 && t.length >= 10 && t.length <= 500;
+  document.getElementById('btn-' + id).disabled = !ok;
+  return ok;
+}
+
+function validarPropuesta(mostrarTodo) {
+  const f = document.getElementById('form-propuesta');
+  const reglas = {
+    url: v => {
+      if (!v.trim()) return 'Pega la dirección de la noticia original.';
+      try {
+        const u = new URL(v.trim());
+        return /^https?:$/.test(u.protocol) ? '' : 'La dirección debe empezar por http:// o https://.';
+      } catch (e) { return 'La dirección no es válida. Cópiala completa desde el navegador.'; }
+    },
+    titular: v => v.trim().length < 10 ? 'Escribe un titular de al menos 10 caracteres.' : '',
+    categoria: v => v ? '' : 'Elige una categoría.',
+    justificacion: v => v.trim().length < 20 ? `Explica en al menos 20 caracteres por qué interesa al Lab. Llevas ${v.trim().length}.` : ''
+  };
+  let valido = true;
+  for (const [campo, regla] of Object.entries(reglas)) {
+    const el = f.elements[campo];
+    const msg = regla(el.value);
+    if (msg) valido = false;
+    const visible = mostrarTodo || el.dataset.tocado === '1';
+    document.getElementById('err-p-' + campo).textContent = visible ? msg : '';
+    el.setAttribute('aria-invalid', visible && msg ? 'true' : 'false');
+  }
+  return valido;
+}
+
+function aviso(texto) {
+  const el = document.getElementById('aviso');
+  el.textContent = texto;
+  el.classList.remove('hidden');
+  clearTimeout(aviso.temporizador);
+  aviso.temporizador = setTimeout(() => el.classList.add('hidden'), 3200);
+}
+
+function publicarComentario(id) {
+  if (!validarComentario(id)) return;
+  const autor = document.getElementById('nom-' + id).value.trim();
+  const texto = document.getElementById('txt-' + id).value.trim();
+  nombre = autor;
+  LS.guardar(CLAVES.nombre, nombre);
+  estado.nombreTemp = null;
+  const info = buscarNoticia(id);
+  const titular = sinPunto(info.noticia.titular);
+  const r = clasificar(texto);
+  const cId = 'c' + Date.now();
+
+  if (r.clase === 'rechazado') {
+    registro.unshift({ estado: 'Descartado automáticamente', texto: `Comentario de ${autor} en «${titular}». ${r.motivo}`, hora: hora() });
+    estado.feedback[id] = { tipo: 'rechazado', texto: 'No se ha publicado. La moderación automática ha detectado un posible incumplimiento de las normas de convivencia del Lab.' };
+  } else {
+    const nuevoComentario = {
+      id: cId, noticiaId: id, autor, texto, fecha: 'hoy, ' + hora(), estado: r.clase, motivo: r.motivo, propio: true, respuesta: null
+    };
+    comentarios.push(nuevoComentario);
+    
+    fetch('/api/comentarios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nuevoComentario)
+    }).catch(e => console.error(e));
+
+    if (r.clase === 'ambiguo') {
+      estado.feedback[id] = { tipo: 'revision', texto: 'Comentario recibido. Pasa por revisión del equipo antes de mostrarse al resto; mientras tanto solo lo ves tú.' };
+    } else {
+      registro.unshift({ estado: 'Publicado automáticamente', texto: `Comentario de ${autor} en «${titular}»`, hora: hora() });
+      estado.feedback[id] = { tipo: 'publicado', texto: 'Comentario publicado.' };
+    }
+  }
+  estado.textos[id] = '';
+  render();
+}
+
+function enviarPropuesta() {
+  if (!validarPropuesta(true)) {
+    const primero = document.querySelector('#form-propuesta [aria-invalid="true"]');
+    if (primero) primero.focus();
+    return;
+  }
+  const f = document.getElementById('form-propuesta');
+  propuestas.unshift({
+    id: 'p' + Date.now(),
+    url: f.elements.url.value.trim(),
+    titular: f.elements.titular.value.trim(),
+    categoria: f.elements.categoria.value,
+    justificacion: f.elements.justificacion.value.trim(),
+    fecha: 'hoy, ' + hora()
+  });
+  LS.guardar(CLAVES.propuestas, propuestas);
+  cerrarModal();
+  aviso('Propuesta enviada al equipo del IA Lab');
+  if (estado.vista === 'admin') render();
+}
+
+function abrirModal() {
+  const m = document.getElementById('modal');
+  const f = document.getElementById('form-propuesta');
+  f.reset();
+  f.querySelectorAll('[data-tocado]').forEach(el => delete el.dataset.tocado);
+  validarPropuesta(false);
+  estado.focoPrevio = document.activeElement;
+  m.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('p-url').focus();
+}
+
+function cerrarModal() {
+  document.getElementById('modal').classList.add('hidden');
+  document.body.style.overflow = '';
+  if (estado.focoPrevio && estado.focoPrevio.focus) estado.focoPrevio.focus();
+}
+
+function irA(vista, edicionId) {
+  estado.vista = vista;
+  if (vista === 'edicion') estado.edicionId = edicionId || mockData.edicionActual.id;
+  render();
+  window.scrollTo({ top: 0 });
+}
+
+function marcarNav() {
+  const esActual = estado.edicionId === mockData.edicionActual.id;
+  document.querySelectorAll('[data-nav]').forEach(b => {
+    const destino = b.dataset.nav;
+    const activo =
+      (destino === 'edicion' && estado.vista === 'edicion' && esActual) ||
+      (destino === 'hemeroteca' && (estado.vista === 'hemeroteca' || (estado.vista === 'edicion' && !esActual))) ||
+      (destino === 'admin' && estado.vista === 'admin');
+    b.classList.toggle('nav-activo', activo);
+    if (activo) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
+}
+
+function render() {
+  const cont = document.getElementById('vista');
+  if (estado.vista === 'edicion') cont.innerHTML = renderEdicion();
+  else if (estado.vista === 'hemeroteca') { cont.innerHTML = renderHemeroteca(); pintarListaHemeroteca(); }
+  else cont.innerHTML = renderAdmin();
+  document.querySelectorAll('[data-form-comentario]').forEach(f => validarComentario(f.dataset.formComentario));
+  marcarNav();
+}
+
+document.addEventListener('click', async (e) => {
+  const el = e.target.closest('[data-accion], [data-nav]');
+  if (!el) return;
+  if (el.dataset.nav) { irA(el.dataset.nav); return; }
+  const id = el.dataset.id;
+  const c = comentarios.find(x => x.id === id);
+
+  switch (el.dataset.accion) {
+    case 'scroll-top':
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      break;
+    case 'volver-inicio':
+      irA('edicion', mockData.edicionActual.id);
+      break;
+    case 'votar': {
+      const delta = votos.includes(id) ? -1 : 1;
+      if (votos.includes(id)) {
+        votos = votos.filter(v => v !== id);
+      } else {
+        votos.push(id);
+      }
+      LS.guardar(CLAVES.votos, votos);
+
+      const nInfo = buscarNoticia(id);
+      if (nInfo) {
+        nInfo.noticia.votos = Math.max(0, nInfo.noticia.votos + delta);
+      }
+      render();
+
+      fetch('/api/votar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ noticia_id: id, delta })
+      }).catch(err => console.error(err));
+      break;
+    }
+    case 'comentarios':
+      if (estado.paneles.has(id)) estado.paneles.delete(id); else estado.paneles.add(id);
+      render();
+      if (estado.paneles.has(id)) { const p = document.getElementById('panel-' + id); if (p) p.scrollIntoView({ block: 'nearest' }); }
+      break;
+    case 'ver-edicion':
+      irA('edicion', id);
+      break;
+    case 'volver-actual':
+      irA('edicion', mockData.edicionActual.id);
+      break;
+    case 'proponer':
+      abrirModal();
+      break;
+    case 'cerrar-modal':
+      cerrarModal();
+      break;
+    case 'copiar-resumen': {
+      const ok = await copiarTexto(resumenMarkdown());
+      aviso(ok ? 'Resumen copiado. Ya puedes pegarlo en Teams o en un correo.' : 'No se ha podido copiar. Abre «Ver el texto que se copia» y cópialo a mano.');
+      break;
+    }
+    case 'aprobar':
+      if (!c) break;
+      c.estado = 'aprobado';
+      delete c.borrador; delete c.borradorEditado;
+      registro.unshift({ estado: 'Aprobado por el equipo', texto: `Comentario de ${c.autor}`, hora: hora() });
+      fetch('/api/comentarios/moderar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: c.id, estado: 'aprobado', respuesta: c.respuesta || null })
+      }).catch(err => console.error(err));
+      render(); aviso('Comentario aprobado y publicado');
+      break;
+    case 'rechazar':
+      if (!c) break;
+      c.estado = 'rechazado';
+      delete c.borrador; delete c.borradorEditado;
+      registro.unshift({ estado: 'Rechazado por el equipo', texto: `Comentario de ${c.autor}`, hora: hora() });
+      fetch('/api/comentarios/moderar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: c.id, estado: 'rechazado', respuesta: null })
+      }).catch(err => console.error(err));
+      render(); aviso('Comentario rechazado');
+      break;
+    case 'generar':
+      if (!c || estado.generando.has(id)) break;
+      estado.generando.add(id);
+      render();
+      setTimeout(() => {
+        c.borrador = generarBorrador(c);
+        c.borradorEditado = c.borrador;
+        estado.generando.delete(id);
+        render();
+        const ta = document.getElementById('bor-' + id);
+        if (ta) ta.focus();
+      }, 800);
+      break;
+    case 'aprobar-con-respuesta': {
+      if (!c) break;
+      const ta = document.getElementById('bor-' + id);
+      const texto = ta ? ta.value.trim() : '';
+      c.respuesta = {
+        texto: texto.length > 0 ? texto : 'Comentario revisado por el equipo.',
+        tipo: 'Escrito totalmente por humanos'
+      };
+      c.estado = 'aprobado';
+      delete c.borrador; delete c.borradorEditado;
+      registro.unshift({ estado: 'Aprobado con respuesta humana', texto: `Comentario de ${c.autor}`, hora: hora() });
+      fetch('/api/comentarios/moderar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: c.id, estado: 'aprobado', respuesta: c.respuesta })
+      }).catch(err => console.error(err));
+      render(); aviso('Comentario y respuesta publicados');
+      break;
+    }
+    case 'eliminar-comentario': {
+      if (!c) break;
+      comentarios = comentarios.filter(x => x.id !== id);
+      fetch('/api/comentarios/eliminar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      }).catch(err => console.error(err));
+      registro.unshift({ estado: 'Eliminado', texto: `Comentario de ${c.autor} borrado del sistema`, hora: hora() });
+      render();
+      aviso('Comentario eliminado definitivamente');
+      break;
+    }
+    case 'descartar-borrador':
+      if (!c) break;
+      delete c.borrador; delete c.borradorEditado;
+      render();
+      break;
+  }
+});
+
+document.addEventListener('input', (e) => {
+  const t = e.target;
+  if (t.dataset.validar) {
+    const id = t.dataset.validar;
+    if (t.name === 'texto') estado.textos[id] = t.value; else estado.nombreTemp = t.value;
+    validarComentario(id);
+  } else if (t.dataset.borrador) {
+    const c = comentarios.find(x => x.id === t.dataset.borrador);
+    if (c) c.borradorEditado = t.value;
+  } else if (t.id === 'buscar') {
+    estado.busqueda = t.value;
+    pintarListaHemeroteca();
+  } else if (t.closest('#form-propuesta')) {
+    t.dataset.tocado = '1';
+    validarPropuesta(false);
+  }
+});
+
+document.addEventListener('change', (e) => {
+  const t = e.target;
+  if (t.id === 'sel-edicion') { estado.filtroEdicion = t.value; pintarListaHemeroteca(); }
+  else if (t.id === 'sel-categoria') { estado.filtroCategoria = t.value; pintarListaHemeroteca(); }
+  else if (t.closest('#form-propuesta')) { t.dataset.tocado = '1'; validarPropuesta(false); }
+});
+
+document.addEventListener('submit', (e) => {
+  const f = e.target;
+  if (f.dataset.formComentario) { e.preventDefault(); publicarComentario(f.dataset.formComentario); }
+  else if (f.id === 'form-propuesta') { e.preventDefault(); enviarPropuesta(); }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('modal').classList.contains('hidden')) cerrarModal();
+});
+
+let ultimoHashDatos = '';
+
+async function sincronizarConBD() {
+  try {
+    const estaEscribiendo = document.activeElement && 
+      (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA');
+    if (estaEscribiendo) return;
+
+    const res = await fetch('/api/datos');
+    if (!res.ok) return;
+    const data = await res.json();
+
+    const nuevoHash = JSON.stringify(data);
+    if (nuevoHash === ultimoHashDatos) return;
+    ultimoHashDatos = nuevoHash;
+
+    if (data.votos && data.votos.length > 0) {
+      data.votos.forEach(v => {
+        const n = buscarNoticia(v.noticia_id);
+        if (n) n.noticia.votos = v.cantidad;
+      });
+    }
+
+    if (data.comentarios) {
+      comentarios = data.comentarios.map(c => ({
+        ...c,
+        noticiaId: c.noticia_id,
+        borradorIA: c.borrador_ia,
+        respuesta: c.respuesta ? JSON.parse(c.respuesta) : null
+      }));
+    }
+
+    render();
+  } catch (e) {}
+}
+
+(function iniciar() {
+  const ed = mockData.edicionActual;
+  document.getElementById('fecha-hoy').textContent = fechaLarga(new Date());
+  document.getElementById('meta-semana').textContent = `Semana ${ed.semana} · ${ed.rango}`;
+  document.getElementById('meta-numero').textContent = `Vol. ${ed.volumen} · Nº ${ed.numero}`;
+  document.getElementById('p-categoria').innerHTML =
+    '<option value="">Elige una categoría</option>' +
+    Object.entries(CATEGORIAS).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+
+  // Pintamos la portada al instante antes de esperar al servidor para evitar que salga en blanco al pulsar F5
+  render();
+
+  sincronizarConBD();
+  setInterval(sincronizarConBD, 3000);
+})();
+</script>
+</body>
+</html>
